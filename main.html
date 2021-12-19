@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Hong Kong</title>
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+        * {box-sizing: border-box;}
+
+        .img-comp-container {
+          position: relative;
+          height: 200px; 
+        }
+        
+        .img-comp-img {
+          position: absolute;
+          width: auto;
+          height: auto;
+          overflow: hidden;
+        }
+        
+        .img-comp-img img {
+          display: block;
+        }
+        
+        .img-comp-slider {
+          position: absolute;
+          z-index: 9;
+          cursor: ew-resize;
+          width: 40px;
+          height: 40px;
+          background-color: black;
+          opacity: 0.7;
+          border-radius: 20%;
+        }
+    </style>
+    <script>
+        function initComparisons() {
+            var x, i;
+            x = document.getElementsByClassName("img-comp-overlay");
+            for (i = 0; i < x.length; i++) {
+              compareImages(x[i]);
+            }
+            function compareImages(img) {
+              var slider, img, clicked = 0, w, h;
+              w = img.offsetWidth;
+              h = img.offsetHeight;
+              img.style.width = (w / 2) + "px";
+              slider = document.createElement("DIV");
+              slider.setAttribute("class", "img-comp-slider");
+              img.parentElement.insertBefore(slider, img);
+              slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+              slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+              slider.addEventListener("mousedown", slideReady);
+              window.addEventListener("mouseup", slideFinish);
+              slider.addEventListener("touchstart", slideReady);
+              window.addEventListener("touchend", slideFinish);
+              function slideReady(e) {
+                e.preventDefault();
+                clicked = 1;
+                window.addEventListener("mousemove", slideMove);
+                window.addEventListener("touchmove", slideMove);
+              }
+              function slideFinish() {
+                clicked = 0;
+              }
+              function slideMove(e) {
+                var pos;
+                if (clicked == 0) return false;
+                pos = getCursorPos(e)
+                if (pos < 0) pos = 0;
+                if (pos > w) pos = w;
+                slide(pos);
+              }
+              function getCursorPos(e) {
+                var a, x = 0;
+                e = (e.changedTouches) ? e.changedTouches[0] : e;
+                a = img.getBoundingClientRect();
+                x = e.pageX - a.left;
+                x = x - window.pageXOffset;
+                return x;
+              }
+              function slide(x) {
+                img.style.width = x + "px";
+                slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+              }
+            }
+          } 
+    </script>
+</head>
+<body style="margin: 0; ">
+    <div style="width: 100%; height: 100vh;">
+        <img src="main.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(30%); object-fit: cover;">
+        <h1 style="position: absolute; top: 40%; left: 30%;transform: translate(-50%, -50%); color: wheat; font-size: 10vh;">Explore <br> Old Hong Kong</h1>
+        <button style="position: absolute; 
+        top: 65%; 
+        left: 17%;transform: translate(-50%, -50%); 
+        color: black; 
+        background-color: wheat;
+        font-size: 4vh; 
+        font-family: 'Times New Roman', Times, serif;
+        border:none;
+        padding: 15px 32px;
+        text-decoration: none;
+        cursor: pointer;
+        "><a href="#mapsection" style="text-decoration: none; color: black;">Explore Now</a></button>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="mapsection">
+        <img src="oldmap.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); color: wheat; font-size: 3h;">Old Hong Kong vs. New Hong Kong</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newmap.png" width="800px" height="600px">
+                
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldmap.png" width="800px" height="600px" usemap="#mappy">
+                <map name="mappy">
+                    <area shape="circle" coords="210,228,15.5" href="#hku">
+                    
+                    <area shape="circle" coords="258,289,15.5" href="#gate">
+                    <area shape="circle" coords="294,234,15.5" href="#market">
+                    <area shape="circle" coords="300,270,15.5" href="#joseph">
+                    <area shape="circle" coords="334,178,15.5" href="#clocktower">
+                    <area shape="circle" coords="350,108,15.5" href="#militaryhospital">
+                    <area shape="circle" coords="361,151,15.5" href="#black">
+                    <area shape="circle" coords="442,252,15.5" href="#tiger">
+                </map>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="market">
+        <img src="oldmarket.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); color: wheat; font-size: 3h;">Old Central Market vs. New Central Market</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newmarket.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldmarket.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">The Taiping Rebellion in China brought many Chinese to escape to Hong Kong, creating a strong demand for a new market. The 4th Generation Central Market was built in 1939, a four-story Modern styled building of the time. It had a total of 255 market stalls and an open Atrium at the center of the building.  A lot of Central Market was demolished or converted to form other public utilities. In 2009, Central Market was announced to be removed from the Land Application List and handed over to the Urban Renewal Authority for conservation and revitalization. In 2021. Central Market reopened with a new look, fully renovated. </h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="clocktower">
+        <img src="oldclocktower.jpeg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old Clock Tower Area vs. New Clock Tower Area</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newclocktower.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldclocktower.jpeg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">Kowloon-Canton Railway was planned in 1904 with its terminus in Tsim Sha Tsui. The construction of the station began in 1913. Part of the station, including the Clock Tower, was completed in 1915. Finally, the whole station was opened in 1916. The station building was demolished in 1977. However, as a compromise, it was decided that the Clock Tower was to be preserved. In 1990, the clock tower was declared as a monument under the Antiquities and Monuments Ordinance. On 9 December 2021, the use of the clock tower's bell chimes was resumed, ringing hourly between 8 am to midnight. </h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="militaryhospital">
+        <img src="oldmilitaryhospital.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old British Military Hospital vs. New British Military Hospital</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newmilitaryhospital.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldmilitaryhospital.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">A hospital used for the British garrison, the British Military Hospital was created in 1903, officially opening in 1907. A 150-bed hospital consisting of two blocks with 3 stories was also used to treat prisoners of war during the Japanese occupation until 1967 where it was turned over to the colonial government. In 1967, a new 15 story British Military Hospital was also opened on Wylie Road in the King's park area. The hospital was eventually closed in 1996 until it was turned over to the Philippine Consulate General as a refuge for dismissed domestic workers. Today however, the site is now a private housing estate.</h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="joseph">
+        <img src="oldjoseph.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old St. Joseph's College vs. New St. Joseph's College</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newjoseph.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldjoseph.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">Originally a portuguese commercial school, St. Joseph's college was located on Pottinger street owned by Father Timoleon Raimondi, a prestigious bishop of the colony. In 1875 however, a group of Christian brothers known as the De La Salle brothers arrived in Hong Kong to rename the school to Saint Joseph. Additional wings were added in 1901 until the Robinson Road campus was damaged during a 1918 earthquake. In 1941, the school was also used as a clinical depot for the Japanese army during their occupation until classes resumed 4 years later, allowing it to become the school we know today.
+        </h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="gate">
+        <img src="oldgate.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old Gate Lodge vs. New Gate Lodge</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newgate.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldgate.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">Located at Mount Austin Road on Victoria Peak, Gate Lodge was built between 1900 and 1902. It was a part of a complex known as Mountain Lodge, which was home to the governor of Hong Kong. However, the main building was demolished in 1946 leaving the Gate Lodge to become a public gallery.
+        </h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="hku">
+        <img src="oldhku.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old Hong Kong University vs. New Hong Kong University</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newhku.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldhku.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">The University of Hong Kong was founded in 1911 as Governor Sir Frederick Lugard had proposed to establish a university in Hong Kong to compete with universities in China. After 1925, the government integrated more Eastern culture into the university. After the Second World War, the university reopened and investment increased as post-war reconstruction efforts began. By 2001, the number of students had grown to 14,300 and the number of degree courses to more than 100. From 2010 to 2012, the university celebrated its 100th anniversary as it opened the Centennial Campus in Pok Fu Lam. 
+        </h6>
+
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="tiger">
+        <img src="oldtiger.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old Tiger Balm Garden vs. New Tiger Balm Garden</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newtiger.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldtiger.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">In 1935, Burmese Chinese entrepreneur and philanthropist (also the founder of tiger balm) Aw Boon Haw created the Haw Par Mansion landscaped garden at a price of 16 million HKD. Opening to the public in the 1950s, the garden underwent multiple changes over time, including a short period where it's statues were replaced with amusement park rides. In the 2000s, the garden was eventually demolished for redevelopment with many of the garden's statues being salvaged, allowing it to become the Haw Par Mansion we know today.
+        </h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative;" id="black">
+        <img src="oldblack.jpg" style="width: 100%; height: 100%; overflow: hidden; filter: brightness(20%) blur(5px); object-fit: cover;" alt="">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Old Blackhead Point vs. New Blackhead Point</h1>
+        <div style="position: absolute; top: 30%; left: calc(50% - 400px);transform: translate(-50%, -50%);">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                <img src="newblack.jpg" width="800px" height="600px">
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                <img src="oldblack.jpg" width="800px" height="600px">
+                </div>
+            </div>
+        </div>
+        <h6 style="position: absolute; top:85%; font-size: 17px; color:wheat; width: 80%; left: 10%; text-align: center; z-index: 100;">Originally a cape located in Tsim Sha Tsui, Blackhead point is named after German businessman Friedrich Johan Berthold Schwarzkopf. Although it remains a small hill, it contains the Signal Hill tower, a three storey building used as a time ball apparatus for the Hong Kong Observatory which used to be located in the nearby Marine Police Headquarters Compound. The apparatus was used from 1908 to 1933 before being used as an ammunition store during World War 2 until becoming the historical landmark we know today.</h6>
+    </div>
+    <div style="width:100%; height: 100vh; position: relative; background-color: black;" id="credit">
+        <h1 style="position: absolute; top: 10%; left: 50%;transform: translate(-50%, -50%); text-align:center; width:100%;color: wheat; font-size: 3h;">Sources of Images</h1>
+        <li style="position: absolute; color: wheat; top: 20%;">
+            <ul>https://www.spacious.hk/en/blog/the-disappearing-buildings-in-hong-kong-vi-92-year-old-chinese-tenement-stays-sturdy-after-truck-crash</ul>
+            <ul>https://www.britannica.com/place/Hong-Kong-Island</ul>
+            <ul>https://en.wikipedia.org/wiki/British_Military_Hospital,_Hong_Kong</ul>
+            <ul>https://www.centralmarket.hk/en/history-timeline</ul>
+            <ul>https://en.wikipedia.org/wiki/Clock_Tower,_Hong_Kong</ul>
+            <ul>https://en.wikipedia.org/wiki/St_Joseph's_College%2C_Hong_Kong</ul>
+            <ul>https://en.wikipedia.org/wiki/Gate_Lodge</ul>
+            <ul>https://en.wikipedia.org/wiki/University_of_Hong_Kong</ul>
+            <ul>https://en.wikipedia.org/wiki/Tiger_Balm_Garden_(Hong_Kong)</ul>
+            <ul>https://www.cardcow.com/306792/hong-kong-tiger-balm-garden-china/</ul>
+            <ul>https://en.wikipedia.org/wiki/Blackhead_Point</ul>
+        </li>
+    </div>
+    <script>
+        initComparisons();
+    </script> 
+</body>
+</html>
